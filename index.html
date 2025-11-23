@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Feliz Cumple Karla</title>
+<style>
+    body {
+        margin: 0;
+        background: #15001a;
+        font-family: "Poppins", sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+        color: white;
+    }
+
+    .card {
+        width: 650px;
+        padding: 40px;
+        background: #2b0140;
+        border-radius: 30px;
+        box-shadow: 0 0 35px rgba(255, 0, 255, 0.4);
+        text-align: center;
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    #msg-img {
+        width: 250px;
+        margin: 0 auto 25px;
+        border-radius: 20px;
+        animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+        0% { transform: scale(0.7); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    #text {
+        font-size: 28px;
+        line-height: 1.5;
+        margin-bottom: 25px;
+        animation: fadeText 0.6s ease;
+    }
+
+    /* Primera frase especial */
+    .big-text {
+        font-size: 48px;
+        font-weight: 800;
+        background: linear-gradient(90deg, #ff6ec4, #7873f5, #ffde59);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glow 1.5s ease-in-out infinite alternate, blink 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+        0% { text-shadow: 0 0 10px #ff6ec4, 0 0 20px #7873f5; }
+        100% { text-shadow: 0 0 25px #ffde59, 0 0 40px #ff6ec4; }
+    }
+
+    @keyframes blink {
+        0%, 50%, 100% { opacity: 1; }
+        25%, 75% { opacity: 0.7; }
+    }
+
+    @keyframes fadeText {
+        from { opacity: 0; transform: translateY(15px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .next-btn {
+        margin-top: 15px;
+        padding: 12px 35px;
+        background: #c060ff;
+        border: none;
+        color: white;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 22px;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+
+    .next-btn:hover {
+        background: #e09fff;
+        transform: scale(1.08);
+    }
+</style>
+</head>
+<body>
+
+<div class="card">
+    <img id="msg-img" src="">
+    <p id="text"></p>
+    <button class="next-btn" onclick="nextMsg()">Siguiente 💜</button>
+</div>
+
+<!-- 🔊 Sonido suave integrado -->
+<audio id="cuteSound">
+    <source src="data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC" type="audio/mp3">
+</audio>
+
+<script>
+const imgs = [
+    "gatito.png",
+    "snopy.png"
+];
+
+const mensajes = [
+"Feliz cumpleaños Karlitaaaaaaa",
+"1. Gracias por estar aquí un año más.",
+"2. Eres una grandisima persona, aunque a veces no lo veas.",
+"3. Eres más fuerte de lo que crees.",
+"4. Quiero que aprendas a quererte incluso en tus días nublados.",
+"5. Quiero que no te falten razones para seguir creyendo en ti.",
+"6. Estoy muy orgulloso de ti por lo que logras todos los días.",
+"7. Eres muy inteligente y sé que vas a llegar lejos.",
+"8. Eres una niña super alegre, dedicada, sigue así.",
+"9. Gracias a ti soy mejor ser humano.",
+"10. Eres como un atardecer bonito, un cielo suave, un paisaje precioso.",
+"11. Tus ojos son lo más precioso que han visto los míos.",
+"12. Nadie es como tú eres única.",
+"13. Vales muchísimo, aunque a veces lo olvides.",
+"14. Tienes un corazón sincero que se nota.",
+"15. Piensas en los demás sin esperar nada.",
+"16. Sientes de verdad, no a medias.",
+"17. No te rindes.",
+"18. Sigues incluso cuando pesa.",
+"19. Eliges ser buena incluso cuando es difícil.",
+"20. Quiero que rías, sueñes y ganes en la vida.",
+"21. Tu existencia hace una diferencia enorme."
+];
+
+let index = 0;
+
+function nextMsg() {
+    const imgEl = document.getElementById("msg-img");
+    const textEl = document.getElementById("text");
+    const sound = document.getElementById("cuteSound");
+
+    textEl.style.animation = "none";
+    imgEl.style.animation = "none";
+
+    setTimeout(() => {
+        textEl.style.animation = "fadeText 0.6s ease";
+        imgEl.style.animation = "pop 0.6s ease";
+    }, 10);
+
+    // Primera frase especial
+    if(index === 0){
+        textEl.classList.add("big-text");
+        imgEl.style.display = "none";
+    } else {
+        textEl.classList.remove("big-text");
+        imgEl.style.display = "block";
+        imgEl.src = imgs[(index - 1) % imgs.length];
+    }
+
+    textEl.innerText = mensajes[index];
+
+    sound.currentTime = 0;
+    sound.play();
+
+    index++;
+    if(index >= mensajes.length) index = 0;
+}
+
+nextMsg();
+</script>
+
+</body>
+</html>
+
